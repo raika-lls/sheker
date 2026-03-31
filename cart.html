@@ -340,10 +340,10 @@
   <div class="section" id="payment">
     <h2>Способ оплаты</h2>
     <div class="pay-box">
-      <button onclick="pay()">Kaspi</button>
-      <button>Halyk Bank</button>
-      <button>Freedom Bank</button>
-      <button>Eurasian Bank</button>
+     <button onclick="fakePay('Kaspi')">Kaspi</button>
+<button onclick="fakePay('Halyk Bank')">Halyk Bank</button>
+<button onclick="fakePay('Freedom Bank')">Freedom Bank</button>
+<button onclick="fakePay('Eurasian Bank')">Eurasian Bank</button>
       <button>Ввести карту вручную</button>
     </div>
   </div>
@@ -684,11 +684,41 @@
 
     }, 700);
 
-  } catch (error) {
-    console.error("Ошибка отправки заказа:", error);
-    alert("Не удалось отправить заказ в базу");
+  } 
+  const payBtn = document.getElementById('payBtn');
+  const payment = document.getElementById('payment');
+  const success = document.getElementById('success');
+  const delivery = document.getElementById('delivery');
+  const cake = document.getElementById('cake');
+
+  // открыть способы оплаты
+  payBtn.onclick = () => {
+    payment.style.display = 'block';
+  };
+
+  // фейковая оплата
+  function fakePay(bankName) {
+    alert(`Оплата через ${bankName} успешно выполнена ✅`);
+
+    success.style.display = 'block';
+
+    cake.style.left = '0%';
+
+    setTimeout(() => {
+      cake.style.left = '50%';
+
+      setTimeout(() => {
+        cake.style.left = '95%';
+
+        setTimeout(() => {
+          delivery.style.display = 'block';
+        }, 500);
+
+      }, 2000);
+
+    }, 1000);
   }
-}
+
 
   window.showPickup = function() {
     document.getElementById('pickupSection').style.display = 'block';
