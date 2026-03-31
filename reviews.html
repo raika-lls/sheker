@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Отзывы — Шекер</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<style>
+*{margin:0; padding:0; box-sizing:border-box;}
+body{font-family:'Inter',sans-serif; background:#fdfaf8; color:#6d5241;}
+.wrapper{max-width:900px; margin:40px auto; padding:30px; background:white; border-radius:25px; box-shadow:0 10px 30px rgba(0,0,0,0.07);}
+h1{ text-align:center; margin-bottom:40px; font-family:'Playfair Display', serif;}
+.back-btn{ display:inline-block; margin-bottom:30px; color:white; background:#6d5241; padding:10px 25px; border-radius:25px; text-decoration:none;}
+.filling{margin-bottom:70px; padding-bottom:40px; border-bottom:1px solid #eee;}
+.filling img{ width:50%; max-height:300px; object-fit:cover; border-radius:15px;}
+.filling h2{ margin:15px 0 5px;}
+.calories{ font-size:13px; color:#999; margin-bottom:20px;}
+.reviews-container{margin-bottom:10px;}
+.review-box{ background:#f9f4f1; padding:18px; border-radius:14px; margin-bottom:14px; display:none; animation:fade 0.4s ease; position:relative;}
+.review-box.active{ display:block; }
+.review-name{ font-weight:bold; margin-bottom:5px;}
+.review-meta{ font-size:12px; color:#666; margin-top:5px; display:flex; justify-content:space-between; align-items:center;}
+.review-stars{ color:#f5a623; }
+.like-btn{
+  cursor:pointer;
+  background:none;
+  border:none;
+  color:#6d5241;
+  font-weight:bold;
+  margin-left:5px;
+  position:relative;
+  transition: color 0.2s;
+}
+.like-btn:hover{ color:red; }
+.like-btn::after{
+  content:'Нравится';
+  font-size:10px;
+  color:#fff;
+  background:#6d5241;
+  padding:2px 5px;
+  border-radius:5px;
+  position:absolute;
+  top:-20px;
+  right:0;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.2s;
+}
+.like-btn:hover::after{ opacity:1; }
+
+.buttons{ margin-top:10px;}
+.buttons button{ background:#6d5241; color:white; border:none; padding:7px 18px; border-radius:20px; cursor:pointer; margin-right:10px;}
+.add-review-btn{ margin-top:20px; display:inline-block; background:#6d5241; color:white; padding:8px 20px; border-radius:20px; cursor:pointer; font-size:14px;}
+.review-form{ margin-top:15px; display:none;}
+.review-form input, .review-form textarea, .review-form select{ width:100%; padding:8px; margin-bottom:10px; border-radius:10px; border:1px solid #ddd; font-family:'Inter',sans-serif;}
+.review-form button{ background:#6d5241; color:white; border:none; padding:8px 20px; border-radius:20px; cursor:pointer;}
+@keyframes fade{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<a href="index.html" class="back-btn">← Назад</a>
+<h1>Отзывы клиентов</h1>
+
+<!-- Орео -->
+<div class="filling" id="oreo">
+  <img src="oreo.jpeg">
+  <h2>Бенто-орео</h2>
+  <div class="calories">Калорийность: ~420 ккал на 100г</div>
+  <div class="reviews-container"></div>
+  <div class="buttons">
+    <button onclick="prevReview(this)">←</button>
+    <button onclick="nextReview(this)">→</button>
+  </div>
+  <div class="add-review-btn" onclick="toggleForm(this)">Оставить отзыв</div>
+  <div class="review-form">
+    <input type="text" placeholder="Ваше имя">
+    <textarea placeholder="Ваш отзыв"></textarea>
+    <label>Рейтинг: 
+      <select class="rating-select">
+        <option value="1">★☆☆☆☆</option>
+        <option value="2">★★☆☆☆</option>
+        <option value="3">★★★☆☆</option>
+        <option value="4">★★★★☆</option>
+        <option value="5" selected>★★★★★</option>
+      </select>
+    </label>
+    <button onclick="saveReview(this,'oreo')">Сохранить</button>
+  </div>
+</div>
+
+<!-- Вишня -->
+<div class="filling" id="cherry">
+  <img src="cherry.jpeg">
+  <h2>Бенто-вишня-кокос</h2>
+  <div class="calories">Калорийность: ~390 ккал на 100г</div>
+  <div class="reviews-container"></div>
+  <div class="buttons">
+    <button onclick="prevReview(this)">←</button>
+    <button onclick="nextReview(this)">→</button>
+  </div>
+  <div class="add-review-btn" onclick="toggleForm(this)">Оставить отзыв</div>
+  <div class="review-form">
+    <input type="text" placeholder="Ваше имя">
+    <textarea placeholder="Ваш отзыв"></textarea>
+    <label>Рейтинг: 
+      <select class="rating-select">
+        <option value="1">★☆☆☆☆</option>
+        <option value="2">★★☆☆☆</option>
+        <option value="3">★★★☆☆</option>
+        <option value="4">★★★★☆</option>
+        <option value="5" selected>★★★★★</option>
+      </select>
+    </label>
+    <button onclick="saveReview(this,'cherry')">Сохранить</button>
+  </div>
+</div>
+
+<!-- Морковь -->
+<div class="filling" id="carrot">
+  <img src="carrot.jpeg">
+  <h2>Бенто-морковь</h2>
+  <div class="calories">Калорийность: ~410 ккал на 100г</div>
+  <div class="reviews-container"></div>
+  <div class="buttons">
+    <button onclick="prevReview(this)">←</button>
+    <button onclick="nextReview(this)">→</button>
+  </div>
+  <div class="add-review-btn" onclick="toggleForm(this)">Оставить отзыв</div>
+  <div class="review-form">
+    <input type="text" placeholder="Ваше имя">
+    <textarea placeholder="Ваш отзыв"></textarea>
+    <label>Рейтинг: 
+      <select class="rating-select">
+        <option value="1">★☆☆☆☆</option>
+        <option value="2">★★☆☆☆</option>
+        <option value="3">★★★☆☆</option>
+        <option value="4">★★★★☆</option>
+        <option value="5" selected>★★★★★</option>
+      </select>
+    </label>
+    <button onclick="saveReview(this,'carrot')">Сохранить</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const initialData = {
+    "oreo":[
+      {name:"Алина",text:"Очень нежный вкус, не приторный 🤍",rating:5,date:"2026-02-18",likes:3},
+      {name:"Дамир",text:"Заказывал девушке — сказала лучший бенто!",rating:4,date:"2026-02-17",likes:1}
+    ],
+    "cherry":[
+      {name:"Айгерим",text:"Очень лёгкий вкус и приятная кислинка 🍒",rating:5,date:"2026-02-16",likes:2},
+      {name:"Руслан",text:"Идеальный баланс сладкого и кислого!",rating:4,date:"2026-02-15",likes:1}
+    ],
+    "carrot":[
+      {name:"Ержан",text:"Очень ароматный и нежный!",rating:5,date:"2026-02-14",likes:4},
+      {name:"Диана",text:"Совсем не чувствуется морковь — вкус супер!",rating:4,date:"2026-02-13",likes:2}
+    ]
+  };
+
+  function initReviews(id){
+    const filling = document.getElementById(id);
+    const container = filling.querySelector('.reviews-container');
+    let saved = JSON.parse(localStorage.getItem(id)) || initialData[id] || [];
+    container.innerHTML='';
+    saved.forEach(r => addReview(container,r));
+    setActive(container,0);
+  }
+
+  function addReview(container,r){
+    const div = document.createElement('div');
+    div.className="review-box";
+    div.innerHTML=`
+      <div class="review-name">${r.name}</div>
+      <div>${r.text}</div>
+      <div class="review-meta">
+        <span class="review-stars">${'★'.repeat(r.rating)+'☆'.repeat(5-r.rating)}</span>
+        <span>${r.date}</span>
+        <span><button class="like-btn" onclick="likeReview(this)">❤ ${r.likes||0}</button></span>
+      </div>
+    `;
+    container.appendChild(div);
+  }
+
+  function setActive(container,index){
+    const reviews = container.querySelectorAll('.review-box');
+    reviews.forEach(r=>r.classList.remove('active'));
+    if(reviews[index]) reviews[index].classList.add('active');
+  }
+
+  window.nextReview=function(btn){
+    const filling=btn.closest('.filling');
+    const reviews=filling.querySelectorAll('.review-box');
+    let index=[...reviews].findIndex(r=>r.classList.contains('active'));
+    reviews[index].classList.remove('active');
+    index=(index+1)%reviews.length;
+    reviews[index].classList.add('active');
+  }
+
+  window.prevReview=function(btn){
+    const filling=btn.closest('.filling');
+    const reviews=filling.querySelectorAll('.review-box');
+    let index=[...reviews].findIndex(r=>r.classList.contains('active'));
+    reviews[index].classList.remove('active');
+    index=(index-1+reviews.length)%reviews.length;
+    reviews[index].classList.add('active');
+  }
+
+  window.toggleForm=function(btn){
+    const filling=btn.closest('.filling');
+    const form=filling.querySelector('.review-form');
+    btn.style.display="none";
+    form.style.display="block";
+  }
+
+  window.saveReview = function(btn, id) {
+  const filling = btn.closest('.filling');
+  const form = filling.querySelector('.review-form');
+  const container = filling.querySelector('.reviews-container');
+  const addBtn = filling.querySelector('.add-review-btn');
+
+  const name = form.querySelector('input').value.trim();
+  const text = form.querySelector('textarea').value.trim();
+  const rating = parseInt(form.querySelector('.rating-select').value);
+  if (!name || !text) return alert("Заполните все поля");
+
+  const date = new Date().toISOString().split('T')[0];
+  const saved = JSON.parse(localStorage.getItem(id)) || [];
+  const newReview = { name, text, rating, date, likes: 0 };
+  saved.push(newReview);
+  localStorage.setItem(id, JSON.stringify(saved));
+
+  // Добавляем отзыв в DOM
+  const div = document.createElement('div');
+  div.className = "review-box active";
+  div.innerHTML = `
+    <div class="review-name">${newReview.name}</div>
+    <div>${newReview.text}</div>
+    <div class="review-meta">
+      <span class="review-stars">${'★'.repeat(rating)+'☆'.repeat(5-rating)}</span>
+      <span>${date}</span>
+      <span><button class="like-btn" onclick="likeReview(this)">❤ 0</button></span>
+    </div>
+  `;
+  // Скрываем предыдущий активный
+  container.querySelectorAll('.review-box').forEach(r => r.classList.remove('active'));
+  container.appendChild(div);
+
+  // Скрываем форму и возвращаем кнопку
+  setTimeout(() => {
+    form.style.display = "none";
+    addBtn.style.display = "inline-block";
+  }, 0);
+
+  form.reset();
+};
+
+
+  window.likeReview=function(btn){
+    const filling=btn.closest('.filling');
+    const container=filling.querySelector('.reviews-container');
+    const index=[...container.querySelectorAll('.review-box')].findIndex(r=>r.contains(btn));
+    const id=filling.id;
+    const saved=JSON.parse(localStorage.getItem(id))||[];
+    saved[index].likes=(saved[index].likes||0)+1;
+    localStorage.setItem(id,JSON.stringify(saved));
+    btn.innerText=`❤ ${saved[index].likes}`;
+    btn.style.color='red';
+  }
+
+  initReviews('oreo');
+  initReviews('cherry');
+  initReviews('carrot');
+});
+</script>
+</div>
+</body>
+</html>

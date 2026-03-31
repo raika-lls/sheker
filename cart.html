@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Корзина — Шекер</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #fdfaf8;
+      color: #6d5241;
+    }
+
+    .wrapper {
+      max-width: 950px;
+      margin: 50px auto;
+      background: white;
+      border-radius: 25px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    h1, h2, h3 {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .top-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 18px 0 28px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      background: #6d5241;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      display: inline-block;
+      text-decoration: none;
+      transition: 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #5a4032;
+    }
+
+    .btn-small {
+      padding: 10px 18px;
+      font-size: 14px;
+    }
+
+    .btn-light {
+      background: #fff0e8;
+      color: #6d5241;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #f0e4dd;
+    }
+
+    .cart-item img {
+      width: 120px;
+      height: 120px;
+      border-radius: 20px;
+      object-fit: cover;
+    }
+
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .section {
+      display: none;
+      margin-top: 40px;
+    }
+
+    .summary-box {
+      background: #fff8f3;
+      border: 1px solid #ead8cc;
+      border-radius: 20px;
+      padding: 22px;
+      margin-bottom: 30px;
+      display: none;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .summary-card {
+      background: white;
+      border: 1px solid #eadfd7;
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .summary-card p {
+      margin: 0;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .filling-list {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 12px;
+    }
+
+    .filling-list li {
+      padding: 8px 0;
+      border-bottom: 1px dashed #ead8cc;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .filling-list li:last-child {
+      border-bottom: none;
+    }
+
+    .extras-box {
+      display: none;
+      margin: 20px 0 25px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #fff8f3;
+      border: 1px solid #ead8cc;
+    }
+
+    .extras-row {
+      display: none;
+      margin-top: 12px;
+      font-size: 15px;
+      color: #6d5241;
+    }
+
+    .pay-box {
+      max-width: 420px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pay-box button {
+      width: 100%;
+      padding: 10px;
+      border-radius: 12px;
+      border: none;
+      background: #f3ece7;
+      color: #6d5241;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .timeline {
+      margin: 40px 0;
+      position: relative;
+    }
+
+    .line {
+      height: 4px;
+      background: #e0d4cc;
+      border-radius: 5px;
+      position: relative;
+    }
+
+    .cake {
+      position: absolute;
+      top: -18px;
+      left: 0%;
+      font-size: 28px;
+      transition: left 0.5s ease;
+    }
+
+    .steps {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    .address input {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .saved-address {
+      padding: 12px;
+      background: #f3ece7;
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 300px;
+      border-radius: 20px;
+      border: none;
+      margin-top: 20px;
+    }
+
+    .custom-design-box {
+      background: #fff8f3;
+      border: 1px solid #ead8cc;
+      border-radius: 20px;
+      padding: 22px;
+      margin-top: 30px;
+    }
+
+    .custom-design-box p {
+      line-height: 1.8;
+      font-size: 14px;
+      margin: 10px 0 14px;
+    }
+
+    .custom-design-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .empty-box {
+      text-align: center;
+      width: 100%;
+      padding: 30px 0;
+    }
+
+    @media (max-width: 760px) {
+      .wrapper {
+        margin: 20px 12px;
+        padding: 22px 16px;
+      }
+
+      .cart-item {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+  <h1>Корзина</h1>
+
+  <div class="top-actions">
+    <a class="btn btn-small" href="projectNA3.html">← Назад к начинкам</a>
+    <a class="btn btn-small" href="projectNA4.html">Связь</a>
+  </div>
+
+  <div class="summary-box" id="orderSummary">
+    <h2>Детали заказа</h2>
+
+    <div class="summary-grid">
+      <div class="summary-card">
+        <h3 style="margin-top:0; margin-bottom:10px;">Какой торт</h3>
+        <p id="summaryCake">Бенто торт</p>
+      </div>
+
+      <div class="summary-card">
+        <h3 style="margin-top:0; margin-bottom:10px;">Сколько позиций в заказе</h3>
+        <p id="summaryCount">0 шт</p>
+      </div>
+    </div>
+
+    <div class="summary-card" style="margin-top:16px;">
+      <h3 style="margin-top:0; margin-bottom:10px;">Выбранные начинки</h3>
+      <ul class="filling-list" id="summaryFillings"></ul>
+    </div>
+
+    <div class="summary-card" style="margin-top:16px;">
+      <h3 style="margin-top:0; margin-bottom:10px;">Общая сумма</h3>
+      <p id="summaryTotal">0 тг</p>
+    </div>
+  </div>
+
+  <div class="cart-item" id="cartItem"></div>
+
+  <div class="extras-box" id="extrasBox">
+    <label style="display:flex; align-items:center; gap:12px; font-size:16px; cursor:pointer;">
+      <input type="checkbox" id="extrasCheckbox" style="width:18px; height:18px;">
+      Свечи / открытка (+500 тг)
+    </label>
+
+    <div class="extras-row" id="extrasRow">
+      Добавлено: <strong>Свечи / открытка — 500 тг</strong>
+    </div>
+  </div>
+
+  <div style="text-align:center;">
+    <button class="btn" id="payBtn">Оплатить</button>
+  </div>
+
+  <div class="custom-design-box">
+    <h2>Собственный дизайн</h2>
+    <p>
+      Если хотите свой дизайн торта, напишите нам через страницу связи
+      или сразу в WhatsApp, чтобы обсудить подробные детали заказа:
+      оформление, цвет, надпись, фото-пример и пожелания.
+    </p>
+
+    <div class="custom-design-actions">
+      <a class="btn btn-small" href="projectNA4.html">Написать через связь</a>
+      <a class="btn btn-small" href="https://wa.me/77079756274" target="_blank">Написать в WhatsApp</a>
+    </div>
+  </div>
+
+  <!-- PAYMENT -->
+  <div class="section" id="payment">
+    <h2>Способ оплаты</h2>
+    <div class="pay-box">
+      <button onclick="pay()">Kaspi</button>
+      <button>Halyk Bank</button>
+      <button>Freedom Bank</button>
+      <button>Eurasian Bank</button>
+      <button>Ввести карту вручную</button>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="section" id="success">
+    <h2>✅ Заказ подтверждён</h2>
+
+    <div class="timeline">
+      <div class="line">
+        <div class="cake" id="cake">🍰</div>
+      </div>
+      <div class="steps">
+        <span>Подтверждён</span>
+        <span>Готовится</span>
+        <span>Готово</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DELIVERY -->
+  <div class="section" id="delivery">
+    <h2>Как получить заказ?</h2>
+    <div style="text-align:center;">
+      <button class="btn btn-small" onclick="showPickup()">Самовывоз</button>
+      <button class="btn btn-small" onclick="showCourier()">Курьер</button>
+    </div>
+  </div>
+
+  <!-- PICKUP -->
+  <div class="section" id="pickupSection">
+    <p><strong>Заказ №12</strong></p>
+    <p>г. Астана, ул. Кунаева, 12</p>
+  </div>
+
+  <!-- COURIER -->
+  <div class="section" id="courierSection">
+    <div class="address" id="addressInput">
+      <input placeholder="Улица, дом">
+      <input placeholder="Квартира">
+      <input placeholder="Подъезд">
+      <input placeholder="Этаж">
+      <button class="btn btn-small" onclick="saveAddress()">Сохранить адрес</button>
+    </div>
+
+    <div class="section" id="courierStatus">
+      <p>🚚 Ищем курьера...</p>
+    </div>
+
+    <div class="section" id="courierInfo">
+      <p>👤 Арман, курьер в пути к вам</p>
+      <button class="btn btn-small" onclick="showMap()">Показать карту</button>
+    </div>
+
+    <div class="section" id="map">
+      <iframe src="https://www.google.com/maps?q=Астана%20Кунаева%2012&output=embed"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  const cartItemEl = document.getElementById('cartItem');
+  const orderSummary = document.getElementById('orderSummary');
+  const summaryCake = document.getElementById('summaryCake');
+  const summaryCount = document.getElementById('summaryCount');
+  const summaryFillings = document.getElementById('summaryFillings');
+  const summaryTotal = document.getElementById('summaryTotal');
+
+  const extrasBox = document.getElementById('extrasBox');
+  const extrasCheckbox = document.getElementById('extrasCheckbox');
+  const extrasRow = document.getElementById('extrasRow');
+
+  function getCart() {
+    try {
+      return JSON.parse(localStorage.getItem('cartItems') || '[]');
+    } catch {
+      return [];
+    }
+  }
+
+  function saveCart(items) {
+    localStorage.setItem('cartItems', JSON.stringify(items));
+  }
+
+  function getExtras() {
+    return localStorage.getItem('cartExtras') === '1';
+  }
+
+  function saveExtras(value) {
+    localStorage.setItem('cartExtras', value ? '1' : '0');
+  }
+
+  function formatTg(n) {
+    return Number(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' тг';
+  }
+
+  function totalSum(cart) {
+    let total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+    if (getExtras()) total += 500;
+    return total;
+  }
+
+  function totalCount(cart) {
+    let count = cart.reduce((sum, i) => sum + i.qty, 0);
+    if (getExtras()) count += 1;
+    return count;
+  }
+
+  function getSelectedCakeName() {
+    const savedCake = localStorage.getItem('selectedCakeName');
+    return savedCake || 'Бенто торт';
+  }
+
+  function renderSummary(cart) {
+    if (!cart.length) {
+      orderSummary.style.display = 'none';
+      return;
+    }
+
+    orderSummary.style.display = 'block';
+    summaryCake.textContent = getSelectedCakeName();
+    summaryCount.textContent = `${totalCount(cart)} шт`;
+    summaryTotal.textContent = formatTg(totalSum(cart));
+
+    let fillingsHtml = cart.map(item => `
+      <li>
+        <span>${item.name} × ${item.qty}</span>
+        <strong>${formatTg(item.price * item.qty)}</strong>
+      </li>
+    `).join('');
+
+    if (getExtras()) {
+      fillingsHtml += `
+        <li>
+          <span>Свечи / открытка × 1</span>
+          <strong>${formatTg(500)}</strong>
+        </li>
+      `;
+    }
+
+    summaryFillings.innerHTML = fillingsHtml;
+  }
+
+  function renderCart() {
+    const cart = getCart();
+    const hasExtras = getExtras();
+
+    renderSummary(cart);
+
+    if (!cart.length) {
+      cartItemEl.innerHTML = `
+        <div class="empty-box">
+          <h3 style="font-family:'Playfair Display',serif;">Корзина пуста</h3>
+          <p style="margin-top:8px; opacity:.8;">Добавьте начинки на странице «Начинки» 🍰</p>
+          <a class="btn" style="text-decoration:none;" href="projectNA3.html">Перейти к начинкам</a>
+        </div>
+      `;
+      document.getElementById('payBtn').style.display = 'none';
+      extrasBox.style.display = 'none';
+      return;
+    }
+
+    document.getElementById('payBtn').style.display = 'inline-block';
+    extrasBox.style.display = 'block';
+    extrasCheckbox.checked = hasExtras;
+    extrasRow.style.display = hasExtras ? 'block' : 'none';
+
+    cartItemEl.innerHTML = `
+      <div style="width:100%;">
+        ${cart.map(item => `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.name}">
+            <div style="flex:1;">
+              <h3 style="margin:0 0 6px; text-align:left; font-family:Inter,sans-serif;">${item.name}</h3>
+              <div class="price">${formatTg(item.price)}</div>
+
+              <div style="display:flex; align-items:center; gap:10px; margin-top:10px; flex-wrap:wrap;">
+                <button class="btn btn-small" onclick="decQty('${item.id}')">−</button>
+                <div style="min-width:34px; text-align:center; font-weight:600;">${item.qty}</div>
+                <button class="btn btn-small" onclick="incQty('${item.id}')">+</button>
+
+                <button
+                  class="btn btn-small btn-light"
+                  style="margin-left:auto;"
+                  onclick="removeItem('${item.id}')"
+                >
+                  Удалить
+                </button>
+              </div>
+
+              <div style="margin-top:10px; opacity:.9;">
+                Сумма: <strong>${formatTg(item.price * item.qty)}</strong>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+
+        ${hasExtras ? `
+          <div class="cart-item" style="background:#fff8f3; border-radius:18px; padding:18px;">
+            <div style="flex:1;">
+              <h3 style="margin:0 0 6px; text-align:left; font-family:Inter,sans-serif;">Свечи / открытка</h3>
+              <div class="price">${formatTg(500)}</div>
+              <div style="margin-top:10px; opacity:.9;">
+                Дополнение к заказу
+              </div>
+            </div>
+          </div>
+        ` : ''}
+
+        <div style="border-top:1px solid #eee; padding-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div style="font-size:18px; font-weight:700;">
+            Итого: ${formatTg(totalSum(cart))}
+          </div>
+
+          <button class="btn btn-small btn-light" onclick="clearCart()">
+            Очистить корзину
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  window.incQty = function(id) {
+    const cart = getCart();
+    const item = cart.find(i => i.id === id);
+    if (!item) return;
+    item.qty += 1;
+    saveCart(cart);
+    renderCart();
+  }
+
+  window.decQty = function(id) {
+    const cart = getCart();
+    const item = cart.find(i => i.id === id);
+    if (!item) return;
+
+    item.qty -= 1;
+
+    if (item.qty <= 0) {
+      const next = cart.filter(i => i.id !== id);
+      saveCart(next);
+    } else {
+      saveCart(cart);
+    }
+
+    renderCart();
+  }
+
+  window.removeItem = function(id) {
+    const cart = getCart().filter(i => i.id !== id);
+    saveCart(cart);
+    renderCart();
+  }
+
+  window.clearCart = function() {
+    localStorage.removeItem('cartItems');
+    localStorage.removeItem('cartExtras');
+    renderCart();
+  }
+
+  extrasCheckbox.addEventListener('change', function() {
+    saveExtras(this.checked);
+    renderCart();
+  });
+
+  const payBtn = document.getElementById('payBtn');
+  const payment = document.getElementById('payment');
+  const success = document.getElementById('success');
+  const delivery = document.getElementById('delivery');
+  const cake = document.getElementById('cake');
+
+  payBtn.onclick = () => payment.style.display = 'block';
+
+  
+    window.pay = async function(){
+  const cart = getCart();
+
+  if (!cart.length) {
+    alert("Корзина пуста");
+    return;
+  }
+
+  const user = JSON.parse(localStorage.getItem("shekerUser") || "{}");
+
+  const orderData = {
+    customer_name: `${user.firstName || ""} ${user.lastName || ""}`.trim() || "Не указано",
+    phone: user.phone || "Не указано",
+    cake_code: "bento",
+    size_cm: 10,
+    candles_postcard: false,
+    custom_design: false,
+    comment: "Заказ с сайта",
+    total_price: totalSum(cart),
+    items: cart.map(item => ({
+      filling_code: item.id,
+      qty: item.qty,
+      price: item.price
+    }))
+  };
+
+  try {
+    const response = await fetch("/api/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(orderData)
+    });
+
+    const result = await response.json();
+
+    if (!result.success) {
+      alert("Ошибка при сохранении заказа");
+      return;
+    }
+
+    localStorage.setItem("lastOrderId", result.order_id);
+
+    window.open('https://kaspi.kz', '_blank');
+
+    setTimeout(() => {
+      success.style.display = 'block';
+
+      cake.style.left = '0%';
+      setTimeout(() => {
+        cake.style.left = '50%';
+
+        setTimeout(() => {
+          cake.style.left = '95%';
+
+          setTimeout(() => {
+            delivery.style.display = 'block';
+          }, 500);
+
+        }, 5000);
+
+      }, 3000);
+
+    }, 700);
+
+  } catch (error) {
+    console.error("Ошибка отправки заказа:", error);
+    alert("Не удалось отправить заказ в базу");
+  }
+}
+
+  window.showPickup = function() {
+    document.getElementById('pickupSection').style.display = 'block';
+  }
+
+  window.showCourier = function() {
+    document.getElementById('courierSection').style.display = 'block';
+  }
+
+  window.saveAddress = function() {
+    const addrDiv = document.getElementById('addressInput');
+    const inputs = addrDiv.querySelectorAll('input');
+    let fullAddr = '';
+
+    inputs.forEach(inp => {
+      fullAddr += inp.value + ', ';
+    });
+
+    fullAddr = fullAddr.slice(0, -2);
+
+    addrDiv.innerHTML = `<div class="saved-address"><strong>Адрес доставки:</strong> ${fullAddr}</div>`;
+
+    courierStatus.style.display = 'block';
+
+    setTimeout(() => {
+      courierStatus.innerHTML = '✅ Курьер найден';
+      courierInfo.style.display = 'block';
+    }, 3000);
+  }
+
+  window.showMap = function() {
+    map.style.display = 'block';
+  }
+
+  renderCart();
+</script>
+
+</body>
+</html>

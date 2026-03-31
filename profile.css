@@ -1,0 +1,208 @@
+.hidden{ display:none !important; }
+
+/* sidebar */
+#shekerSidebar{
+  position:fixed;
+  right:18px;
+  top:18px;
+  z-index:12000;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:10px;
+  font-family:'Inter',sans-serif;
+}
+#shekerBurger{
+  width:52px; height:52px;
+  border-radius:16px;
+  border:1px solid #e8dcd4;
+  background:#fff;
+  box-shadow:0 8px 25px rgba(0,0,0,0.12);
+  color:#6d5241;
+  font-size:22px;
+  cursor:pointer;
+}
+#shekerMenu{
+  width:220px;
+  background:#fff;
+  border:1px solid #e8dcd4;
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.14);
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+#shekerMenu button{
+  width:100%;
+  text-align:left;
+  padding:10px 12px;
+  border-radius:14px;
+  border:none;
+  background:#f5f1ed;
+  color:#6d5241;
+  cursor:pointer;
+  font-size:14px;
+}
+#shekerMenu button:hover{ background:#efe6df; }
+#shekerMenu .danger{ background:#fff0e8; }
+
+/* prompt */
+#shekerAuthPrompt{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.35);
+  z-index:11000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+#shekerAuthPrompt .box{
+  width:min(520px,95vw);
+  background:#fff;
+  border-radius:20px;
+  border:1px solid #e8dcd4;
+  box-shadow:0 15px 40px rgba(0,0,0,0.18);
+  padding:22px 20px;
+  text-align:center;
+}
+#shekerAuthPrompt .title{
+  font-family:'Playfair Display',serif;
+  font-size:22px;
+  color:#6d5241;
+  margin-bottom:10px;
+}
+#shekerAuthPrompt .text{
+  font-size:14px;
+  line-height:1.6;
+  color:#6d5241;
+  opacity:.9;
+  margin-bottom:16px;
+}
+#shekerAuthPrompt button{
+  background:#6d5241;
+  color:#fff;
+  border:none;
+  padding:10px 26px;
+  border-radius:999px;
+  cursor:pointer;
+}
+#shekerAuthPrompt button:hover{ background:#5a4032; }
+
+/* modal */
+#shekerAuthModal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  z-index:11500;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.sheker-auth-window{
+  width:min(620px,96vw);
+  background:#fff;
+  border-radius:22px;
+  border:1px solid #e8dcd4;
+  box-shadow:0 18px 50px rgba(0,0,0,0.2);
+  padding:18px 18px 16px;
+}
+
+.modalHead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+.modalTitle{
+  font-family:'Playfair Display',serif;
+  font-size:22px;
+  color:#6d5241;
+}
+.headBtns{ display:flex; gap:10px; }
+.iconBtn{
+  width:40px; height:40px;
+  border-radius:12px;
+  border:1px solid #e8dcd4;
+  background:#fff;
+  cursor:pointer;
+  color:#6d5241;
+}
+
+/* view */
+.profileView{
+  margin-top:8px;
+  background:#f5f1ed;
+  border:1px solid #e8dcd4;
+  border-radius:18px;
+  padding:14px;
+}
+.profileView .row{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  padding:10px;
+  border-radius:14px;
+  background:#fff;
+  border:1px solid #efe6df;
+  margin-bottom:10px;
+}
+.profileView .k{ font-size:13px; opacity:.75; }
+.profileView .v{ font-size:14px; font-weight:500; text-align:right; }
+
+/* edit */
+.profileEdit{ margin-top:10px; }
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+@media (max-width:560px){
+  .grid{ grid-template-columns:1fr; }
+}
+label{
+  font-size:13px;
+  color:#6d5241;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+input{
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid #e8dcd4;
+  outline:none;
+  font-family:'Inter',sans-serif;
+}
+.actions{ display:flex; justify-content:flex-end; margin-top:12px; }
+#shekerSaveAuth{
+  background:#6d5241;
+  color:#fff;
+  border:none;
+  padding:10px 22px;
+  border-radius:999px;
+  cursor:pointer;
+}
+#shekerSaveAuth:hover{ background:#5a4032; }
+.hint{ margin-top:10px; font-size:12px; opacity:.75; }
+
+/* toast */
+#shekerToast{
+  position:fixed;
+  left:50%;
+  top:45%;
+  transform:translate(-50%,-50%);
+  z-index:13000;
+  pointer-events:none;
+}
+#shekerToast .toastText{
+  background:#fff;
+  border:1px solid #e8dcd4;
+  box-shadow:0 12px 40px rgba(0,0,0,0.18);
+  border-radius:999px;
+  padding:12px 18px;
+  color:#6d5241;
+  font-weight:500;
+}

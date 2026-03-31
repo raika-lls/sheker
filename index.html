@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Кондитерская Шекер - Главная</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+  <!-- Основные стили сайта -->
+  <link rel="stylesheet" href="main.css">
+
+  <!-- Стили профиля -->
+  <link rel="stylesheet" href="profile.css">
+</head>
+
+<body>
+
+  <!-- Модал города -->
+  <div class="modal" id="cityModal">
+    <div class="modal-content">
+      <h2>Выберите ваш город</h2>
+      <select id="citySelect">
+        <option disabled selected>-- Выберите город --</option>
+        <option>Алматы</option>
+        <option>Астана</option>
+        <option>Шымкент</option>
+        <option>Караганда</option>
+        <option>Актобе</option>
+        <option>Тараз</option>
+        <option>Усть-Каменогорск</option>
+        <option>Костанай</option>
+        <option>Павлодар</option>
+        <option>Атырау</option>
+        <option>Кызылорда</option>
+        <option>Уральск</option>
+        <option>Петропавловск</option>
+        <option>Семей</option>
+      </select>
+      <button id="cityChooseBtn">Выбрать</button>
+    </div>
+  </div>
+
+  <!-- Сообщение -->
+  <div class="city-message" id="cityMessage"></div>
+
+  <main>
+    <div class="wrapper">
+      <header>
+        <div class="header-wrapper">
+          <img src="sheker.jpeg" alt="Кондитерская Шекер" width="450" height="200">
+        </div>
+      </header>
+
+      <div class="hero">
+        <h1>Кондитерская «Шекер»</h1>
+        <nav>
+          <a href="#top">Главная</a>
+          <a href="#catalog">Меню</a>
+          <a href="projectNA3.html">Начинки</a>
+          <a href="projectNA4.html">Связь</a>
+        </nav>
+      </div>
+
+     <section class="hero-text"> <h2>Добро пожаловать в «Шекер»</h2> <p>Рады видеть вас в нашем сладком уголке. </p> <p>Здесь каждая крошка полна заботы, а каждый вкус — с характером. Наши десерты — это не просто сладости, а капризные маленькие праздники, которые точно знают, как поднять настроение.</p> <p>Вы, конечно, можете закрыть сайт... Но разве не любопытно, что прячется внутри самой вкусной коробочки этого дня? 🍰</p> </section>
+
+      <section id="catalog">
+       <section class="size-3d-preview">
+  <div class="size-3d-box">
+    <div class="size-3d-text">
+      <h2>Не понимаете размер бенто-торта?</h2>
+      <p>
+        Откройте 3D-просмотр и посмотрите, как выглядит размер торта в реальности.
+      </p>
+      <a href="cake-size-3d.html" class="size-3d-btn">Детали 3D размера</a>
+    </div>
+  </div>
+</section> 
+        <h1 class="catalog-title">Меню</h1>
+
+        <p class="info-text">
+          Оформление торта — по вашему желанию и входит в комплект при заказе 🍰<br>
+          Свечи и открытки - можно добавить за +500тг 🎉
+        </p>
+
+        <p class="info-text light">
+          (Нажмите на изображение торта, чтобы перейти к выбору <strong>Начинки</strong> и уточнению стоимости.)
+        </p>
+<!-- Анимация -->
+    <div class="cake-left"><img src="cake.PNG" alt="cake" width="50" height="50"></div>
+    <div class="cake-right"><img src="cake.PNG" alt="cake" width="50" height="50"></div>
+    <div class="cake-left delay1"><img src="cake.PNG" alt="cake" width="50" height="50"></div>
+    <div class="cake-right delay2"><img src="cake.PNG" alt="cake" width="50" height="50"></div>
+    <div class="cake-left delay3"><img src="cake.PNG" alt="cake" width="50" height="50"></div>
+    <div class="cake-right delay4"><img src="cake.PNG" alt="cake" width="50" height="50"></div>
+    
+        <div class="product-grid">
+          <div class="product-card">
+            <a href="projectNA3.html?cake=lambet"><img src="lambet.jpg" alt="Ламбет"></a>
+            <div class="product-name">Торт «Ламбет»</div>
+          </div>
+
+          <div class="product-card">
+            <a href="projectNA3.html?cake=bento"><img src="benn.jpg" alt="Бенто"></a>
+            <div class="product-name">Бенто торт</div>
+          </div>
+
+          <div class="product-card">
+            <a href="projectNA3.html?cake=lamben"><img src="lamben.jpg" alt="Бенто + Ламбет"></a>
+            <div class="product-name">Бенто + Ламбет</div>
+          </div>
+
+          <div class="product-card">
+            <a href="projectNA3.html?cake=cupcake"><img src="cape.jpg" alt="Капкейки"></a>
+            <div class="product-name">Капкейки</div>
+            <div class="product-price">1.500тг (1шт)</div>
+          </div>
+
+          <div class="product-card">
+            <a href="projectNA3.html?cake=capeben"><img src="capeben.jpg" alt="Капкейки с Бенто"></a>
+            <div class="product-name">Капкейки с Бенто</div>
+          </div>
+
+          <div class="product-card">
+            <a href="projectNA3.html?cake=capelambet"><img src="capelambet.jpg" alt="Капкейки с Ламбет"></a>
+            <div class="product-name">Капкейки с Ламбет</div>
+          </div>
+
+          <div class="product-card">
+            <a href="projectNA3.html?cake=macarons"><img src="macaroon.jpeg" alt="Макарон"></a>
+            <div class="product-name">Макароны</div>
+            <div class="product-price">2.900тг (1шт)</div>
+          </div>
+
+          <div class="product-card">
+            <a href="projectNA3.html?cake=becmaca"><img src="benmaca.jpeg" alt="Макароны с Бенто"></a>
+            <div class="product-name">Макароны с Бенто</div>
+          </div>
+        </div>
+
+        <div class="cake-info-box">
+          Бенто торт — для 1–2 человек:<br>
+          Вес: 300–400 г (±)<br>
+          Диаметр: 10 см<br><br>
+          Бенто торт — для 3–4 человек:<br>
+          Вес: 600–700 г (±)<br>
+          Диаметр: 15 см
+        </div>
+      </section>
+
+      <footer>
+        © 2026 Sheker. Все права защищены.
+      </footer>
+    </div>
+  </main>
+
+  <!-- ===== Профиль (один и тот же блок на всех страницах) ===== -->
+  <div id="shekerSidebar">
+    <button id="shekerBurger" aria-label="Открыть меню">☰</button>
+    <div id="shekerMenu" class="hidden">
+      <button data-action="profile">👤 Профиль</button>
+      <button data-action="settings">⚙️ Настройки</button>
+      <button data-action="lang">🌐 Язык</button>
+      <button data-action="support">💬 Поддержка</button>
+      <button data-action="logout" class="danger">🚪 Выход</button>
+    </div>
+  </div>
+
+  <div id="shekerAuthPrompt" class="hidden">
+    <div class="box">
+      <div class="title">Добро пожаловать в «Шекер» 🤎</div>
+      <div class="text">
+        Чтобы увидеть весь ассортимент, выбрать начинки и оформить заказ,
+        пожалуйста, войдите в аккаунт или зарегистрируйтесь.
+      </div>
+      <button id="shekerOpenAuth">Войти</button>
+    </div>
+  </div>
+
+  <div id="shekerAuthModal" class="hidden">
+    <div class="sheker-auth-window">
+      <div class="modalHead">
+        <div class="modalTitle">Профиль</div>
+        <div class="headBtns">
+          <button id="shekerEditBtn" class="iconBtn" aria-label="Редактировать">✏️</button>
+          <button id="shekerAuthClose" class="iconBtn" aria-label="Закрыть">✕</button>
+        </div>
+      </div>
+
+      <div id="shekerProfileView" class="profileView">
+        <div class="row"><span class="k">Фамилия</span><span class="v" id="viewLastName">—</span></div>
+        <div class="row"><span class="k">Имя</span><span class="v" id="viewFirstName">—</span></div>
+        <div class="row"><span class="k">Телефон</span><span class="v" id="viewPhone">—</span></div>
+        <div class="row"><span class="k">Почта</span><span class="v" id="viewEmail">—</span></div>
+        <div class="hint">Чтобы изменить данные, нажмите ✏️.</div>
+      </div>
+
+      <div id="shekerProfileEdit" class="profileEdit hidden">
+        <div class="grid">
+          <label>Фамилия <input id="shekerLastName" type="text"></label>
+          <label>Имя <input id="shekerFirstName" type="text"></label>
+          <label>Телефон <input id="shekerPhone" type="tel"></label>
+          <label>Почта <input id="shekerEmail" type="email"></label>
+        </div>
+        <div class="actions">
+          <button id="shekerSaveAuth">Сохранить</button>
+        </div>
+        <div class="hint">Данные сохраняются на этом устройстве.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="shekerToast" class="hidden">
+    <div class="toastText" id="shekerToastText">Успешно вошли! Приятного выбора 🎂</div>
+  </div>
+
+  <!-- Скрипты -->
+  <script src="city.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>

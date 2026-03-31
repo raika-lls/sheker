@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Финансы кондитерской</title>
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background:#f8f4f1;
+      color:#5b4335;
+      padding:30px;
+    }
+
+    h1,h2{
+      margin-bottom:15px;
+    }
+
+    .cards{
+      display:flex;
+      gap:20px;
+      flex-wrap:wrap;
+      margin-bottom:30px;
+    }
+
+    .card{
+      background:white;
+      border-radius:16px;
+      padding:20px;
+      min-width:220px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .value{
+      font-size:28px;
+      font-weight:bold;
+      margin-top:8px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      background:white;
+      margin-bottom:30px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.06);
+    }
+
+    th, td{
+      border:1px solid #ddd;
+      padding:12px;
+      text-align:left;
+    }
+
+    th{
+      background:#6d5241;
+      color:white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Финансовая информация</h1>
+
+  <div class="cards">
+    <div class="card">
+      <div>Общий доход</div>
+      <div class="value">{{ total_income }} тг</div>
+    </div>
+
+    <div class="card">
+      <div>Общий расход</div>
+      <div class="value">{{ total_expense }} тг</div>
+    </div>
+
+    <div class="card">
+      <div>Прибыль</div>
+      <div class="value">{{ profit }} тг</div>
+    </div>
+  </div>
+
+  <h2>Заказы</h2>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Имя</th>
+      <th>Телефон</th>
+      <th>Торт</th>
+      <th>Размер</th>
+      <th>Сумма</th>
+      <th>Дата</th>
+    </tr>
+
+    {% for order in orders %}
+    <tr>
+      <td>{{ order.id }}</td>
+      <td>{{ order.customer_name }}</td>
+      <td>{{ order.phone }}</td>
+      <td>{{ order.cake_code }}</td>
+      <td>{{ order.size_cm }} см</td>
+      <td>{{ order.total_price }} тг</td>
+      <td>{{ order.created_at }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <h2>Расходы</h2>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Название</th>
+      <th>Сумма</th>
+      <th>Дата</th>
+    </tr>
+
+    {% for item in expenses %}
+    <tr>
+      <td>{{ item.id }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.amount }} тг</td>
+      <td>{{ item.created_at }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+</body>
+</html>

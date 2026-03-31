@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sheker — 3D детали размера</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      font-family:'Inter',sans-serif;
+      background:#fdfaf8;
+      color:#6d5241;
+      overflow-x:hidden;
+    }
+
+    .page{
+      max-width:1200px;
+      margin:40px auto;
+      background:#fff;
+      border-radius:28px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.07);
+      overflow:hidden;
+      padding:20px;
+    }
+
+    .hero{
+      background:#6d5241;
+      color:#fff;
+      border-radius:20px;
+      padding:34px 20px;
+      text-align:center;
+      margin-bottom:30px;
+    }
+
+    .hero h1{
+      font-family:'Playfair Display',serif;
+      font-size:40px;
+      margin-bottom:12px;
+    }
+
+    .hero p{
+      max-width:760px;
+      margin:0 auto;
+      line-height:1.7;
+      font-size:16px;
+      opacity:.95;
+    }
+
+    .back-link{
+      display:inline-block;
+      margin-top:18px;
+      color:#fff;
+      text-decoration:none;
+      border:1px solid rgba(255,255,255,.35);
+      padding:10px 18px;
+      border-radius:999px;
+      transition:.3s;
+    }
+
+    .back-link:hover{
+      background:rgba(255,255,255,.12);
+    }
+
+    .viewer-section{
+      display:grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap:28px;
+      align-items:stretch;
+    }
+
+    .viewer-card,
+    .info-card{
+      background:#f8f4f1;
+      border:1px solid #eadfd7;
+      border-radius:24px;
+      padding:22px;
+    }
+
+    .viewer-card h2,
+    .info-card h2{
+      font-family:'Playfair Display',serif;
+      font-size:28px;
+      margin-bottom:16px;
+      color:#5b4335;
+    }
+
+    #viewer3d{
+      width:100%;
+      height:520px;
+      border-radius:20px;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.95), rgba(244,237,231,0.95)),
+        linear-gradient(180deg, #f9f5f2 0%, #efe5df 100%);
+      position:relative;
+      border:1px solid #e7d8cf;
+    }
+
+    .hint{
+      margin-top:14px;
+      font-size:14px;
+      line-height:1.6;
+      color:#7a6253;
+    }
+
+    .option-group{
+      margin-top:8px;
+      margin-bottom:24px;
+    }
+
+    .option-label{
+      font-size:15px;
+      margin-bottom:12px;
+      color:#6d5241;
+      font-weight:600;
+    }
+
+    .size-buttons{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .size-btn{
+      border:none;
+      background:#eaded6;
+      color:#5f493c;
+      padding:12px 18px;
+      border-radius:999px;
+      cursor:pointer;
+      font-size:15px;
+      font-weight:600;
+      transition:.25s;
+    }
+
+    .size-btn:hover{
+      background:#ddcec4;
+    }
+
+    .size-btn.active{
+      background:#6d5241;
+      color:#fff;
+      box-shadow:0 6px 14px rgba(109,82,65,.18);
+    }
+
+    .info-block{
+      background:#fff;
+      border:1px solid #eadfd7;
+      border-radius:18px;
+      padding:18px;
+      margin-bottom:14px;
+    }
+
+    .info-title{
+      font-size:14px;
+      color:#8a7162;
+      margin-bottom:6px;
+    }
+
+    .info-value{
+      font-size:24px;
+      font-weight:700;
+      color:#4f3b30;
+    }
+
+    .info-text{
+      font-size:15px;
+      line-height:1.7;
+      color:#6d5241;
+    }
+
+    .note{
+      margin-top:18px;
+      background:#fff7f2;
+      border:1px dashed #d9b8a3;
+      border-radius:16px;
+      padding:16px;
+      font-size:14px;
+      line-height:1.7;
+      color:#7c5f4f;
+    }
+
+    footer{
+      margin-top:30px;
+      background:#654e3e;
+      color:#fff;
+      text-align:center;
+      padding:15px;
+      border-radius:16px;
+      font-size:14px;
+    }
+
+    .loading-text{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:16px;
+      color:#6d5241;
+      background:rgba(253,250,248,0.75);
+      z-index:2;
+    }
+
+    @media (max-width: 900px){
+      .viewer-section{
+        grid-template-columns:1fr;
+      }
+
+      #viewer3d{
+        height:420px;
+      }
+
+      .hero h1{
+        font-size:32px;
+      }
+    }
+
+    @media (max-width: 600px){
+      .page{
+        margin:18px;
+        padding:14px;
+      }
+
+      .hero{
+        padding:28px 16px;
+      }
+
+      .hero h1{
+        font-size:28px;
+      }
+
+      .viewer-card h2,
+      .info-card h2{
+        font-size:24px;
+      }
+
+      #viewer3d{
+        height:340px;
+      }
+
+      .size-buttons{
+        flex-direction:column;
+      }
+
+      .size-btn{
+        width:100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <h1>3D детали размера</h1>
+      <p>
+        Здесь можно посмотреть примерный размер бенто-торта в 3D,
+        покрутить модель и переключить диаметр, чтобы лучше понять масштаб.
+      </p>
+      <a href="index.html#catalog" class="back-link">← Вернуться в меню</a>
+    </section>
+
+    <section class="viewer-section">
+      <div class="viewer-card">
+        <h2>3D просмотр</h2>
+        <div id="viewer3d">
+          <div class="loading-text" id="loadingText">Загрузка 3D модели...</div>
+        </div>
+        <p class="hint">
+          Управление: зажмите мышку и вращайте модель. Колёсиком мыши можно приблизить или отдалить торт.
+        </p>
+      </div>
+
+      <aside class="info-card">
+        <h2>Размер и информация</h2>
+
+        <div class="option-group">
+          <div class="option-label">Выберите диаметр:</div>
+          <div class="size-buttons">
+            <button class="size-btn active" data-size="10">10 см</button>
+            <button class="size-btn" data-size="15">15 см</button>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-title">Диаметр</div>
+          <div class="info-value" id="diameterValue">10 см</div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-title">Вес</div>
+          <div class="info-value" id="weightValue">300–400 г</div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-title">Порции</div>
+          <div class="info-value" id="servingsValue">1–2 человека</div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-title">Описание</div>
+          <div class="info-text" id="descriptionValue">
+            Компактный бенто-торт для небольшого праздника, сюрприза или подарка.
+          </div>
+        </div>
+
+        <div class="note">
+          3D модель показывает примерный размер торта. Декор и оформление в реальном заказе могут отличаться.
+        </div>
+      </aside>
+    </section>
+
+    <footer>
+      © 2026 Sheker. Все права защищены.
+    </footer>
+  </main>
+  
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module" src="cake-viewer.js"></script>
+</body>
+</html>
