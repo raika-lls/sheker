@@ -416,6 +416,12 @@
   const extrasCheckbox = document.getElementById('extrasCheckbox');
   const extrasRow = document.getElementById('extrasRow');
 
+  const payBtn = document.getElementById('payBtn');
+  const payment = document.getElementById('payment');
+  const success = document.getElementById('success');
+  const delivery = document.getElementById('delivery');
+  const cake = document.getElementById('cake');
+
   function getCart() {
     try {
       return JSON.parse(localStorage.getItem('cartItems') || '[]');
@@ -447,14 +453,11 @@
   }
 
   function totalCount(cart) {
-    let count = cart.reduce((sum, i) => sum + i.qty, 0);
-    if (getExtras()) count += 1;
-    return count;
+    return cart.reduce((sum, i) => sum + i.qty, 0);
   }
 
   function getSelectedCakeName() {
-    const savedCake = localStorage.getItem('selectedCakeName');
-    return savedCake || 'Бенто торт';
+    return localStorage.getItem('selectedCakeName') || 'Бенто торт';
   }
 
   function renderSummary(cart) {
@@ -468,7 +471,7 @@
     summaryCount.textContent = `${totalCount(cart)} шт`;
     summaryTotal.textContent = formatTg(totalSum(cart));
 
-    let fillingsHtml = cart.map(item => `
+    let html = cart.map(item => `
       <li>
         <span>${item.name} × ${item.qty}</span>
         <strong>${formatTg(item.price * item.qty)}</strong>
@@ -476,7 +479,7 @@
     `).join('');
 
     if (getExtras()) {
-      fillingsHtml += `
+      html += `
         <li>
           <span>Свечи / открытка × 1</span>
           <strong>${formatTg(500)}</strong>
@@ -484,7 +487,7 @@
       `;
     }
 
-    summaryFillings.innerHTML = fillingsHtml;
+    summaryFillings.innerHTML = html;
   }
 
   function renderCart() {
@@ -501,12 +504,12 @@
           <a class="btn" style="text-decoration:none;" href="projectNA3.html">Перейти к начинкам</a>
         </div>
       `;
-      document.getElementById('payBtn').style.display = 'none';
+      payBtn.style.display = 'none';
       extrasBox.style.display = 'none';
       return;
     }
 
-    document.getElementById('payBtn').style.display = 'inline-block';
+    payBtn.style.display = 'inline-block';
     extrasBox.style.display = 'block';
     extrasCheckbox.checked = hasExtras;
     extrasRow.style.display = hasExtras ? 'block' : 'none';
@@ -525,11 +528,7 @@
                 <div style="min-width:34px; text-align:center; font-weight:600;">${item.qty}</div>
                 <button class="btn btn-small" onclick="incQty('${item.id}')">+</button>
 
-                <button
-                  class="btn btn-small btn-light"
-                  style="margin-left:auto;"
-                  onclick="removeItem('${item.id}')"
-                >
+                <button class="btn btn-small btn-light" style="margin-left:auto;" onclick="removeItem('${item.id}')">
                   Удалить
                 </button>
               </div>
@@ -546,9 +545,7 @@
             <div style="flex:1;">
               <h3 style="margin:0 0 6px; text-align:left; font-family:Inter,sans-serif;">Свечи / открытка</h3>
               <div class="price">${formatTg(500)}</div>
-              <div style="margin-top:10px; opacity:.9;">
-                Дополнение к заказу
-              </div>
+              <div style="margin-top:10px; opacity:.9;">Дополнение к заказу</div>
             </div>
           </div>
         ` : ''}
@@ -583,8 +580,7 @@
     item.qty -= 1;
 
     if (item.qty <= 0) {
-      const next = cart.filter(i => i.id !== id);
-      saveCart(next);
+      saveCart(cart.filter(i => i.id !== id));
     } else {
       saveCart(cart);
     }
@@ -593,8 +589,7 @@
   }
 
   window.removeItem = function(id) {
-    const cart = getCart().filter(i => i.id !== id);
-    saveCart(cart);
+    saveCart(getCart().filter(i => i.id !== id));
     renderCart();
   }
 
@@ -604,104 +599,19 @@
     renderCart();
   }
 
-  extrasCheckbox.addEventListener('change', function() {
+  extrasCheckbox.addEventListener('change', function () {
     saveExtras(this.checked);
     renderCart();
   });
 
-  const payBtn = document.getElementById('payBtn');
-  const payment = document.getElementById('payment');
-  const success = document.getElementById('success');
-  const delivery = document.getElementById('delivery');
-  const cake = document.getElementById('cake');
-
-  payBtn.onclick = () => payment.style.display = 'block';
-
-  
-    window.pay = async function(){
-  const cart = getCart();
-
-  if (!cart.length) {
-    alert("Корзина пуста");
-    return;
-  }
-
-  const user = JSON.parse(localStorage.getItem("shekerUser") || "{}");
-
-  const orderData = {
-    customer_name: `${user.firstName || ""} ${user.lastName || ""}`.trim() || "Не указано",
-    phone: user.phone || "Не указано",
-    cake_code: "bento",
-    size_cm: 10,
-    candles_postcard: false,
-    custom_design: false,
-    comment: "Заказ с сайта",
-    total_price: totalSum(cart),
-    items: cart.map(item => ({
-      filling_code: item.id,
-      qty: item.qty,
-      price: item.price
-    }))
-  };
-
-  try {
-    const response = await fetch("/api/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(orderData)
-    });
-
-    const result = await response.json();
-
-    if (!result.success) {
-      alert("Ошибка при сохранении заказа");
-      return;
-    }
-
-    localStorage.setItem("lastOrderId", result.order_id);
-
-    window.open('https://kaspi.kz', '_blank');
-
-    setTimeout(() => {
-      success.style.display = 'block';
-
-      cake.style.left = '0%';
-      setTimeout(() => {
-        cake.style.left = '50%';
-
-        setTimeout(() => {
-          cake.style.left = '95%';
-
-          setTimeout(() => {
-            delivery.style.display = 'block';
-          }, 500);
-
-        }, 5000);
-
-      }, 3000);
-
-    }, 700);
-
-  } 
-  const payBtn = document.getElementById('payBtn');
-  const payment = document.getElementById('payment');
-  const success = document.getElementById('success');
-  const delivery = document.getElementById('delivery');
-  const cake = document.getElementById('cake');
-
-  // открыть способы оплаты
   payBtn.onclick = () => {
     payment.style.display = 'block';
   };
 
-  // фейковая оплата
-  function fakePay(bankName) {
+  window.fakePay = function(bankName) {
     alert(`Оплата через ${bankName} успешно выполнена ✅`);
 
     success.style.display = 'block';
-
     cake.style.left = '0%';
 
     setTimeout(() => {
@@ -718,7 +628,6 @@
 
     }, 1000);
   }
-
 
   window.showPickup = function() {
     document.getElementById('pickupSection').style.display = 'block';
@@ -741,16 +650,16 @@
 
     addrDiv.innerHTML = `<div class="saved-address"><strong>Адрес доставки:</strong> ${fullAddr}</div>`;
 
-    courierStatus.style.display = 'block';
+    document.getElementById('courierStatus').style.display = 'block';
 
     setTimeout(() => {
-      courierStatus.innerHTML = '✅ Курьер найден';
-      courierInfo.style.display = 'block';
+      document.getElementById('courierStatus').innerHTML = '✅ Курьер найден';
+      document.getElementById('courierInfo').style.display = 'block';
     }, 3000);
   }
 
   window.showMap = function() {
-    map.style.display = 'block';
+    document.getElementById('map').style.display = 'block';
   }
 
   renderCart();
